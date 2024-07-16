@@ -1,0 +1,12 @@
+name: Auto Deploy on tagging
+
+on:
+  push:
+    tags: ["*"]
+
+jobs:
+
+  job-on-tag:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ok

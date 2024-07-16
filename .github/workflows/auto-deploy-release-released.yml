@@ -1,0 +1,12 @@
+name: Auto Deploy on release released
+
+on:
+  release:
+    types: [released]
+
+jobs:
+
+  job-on-release-released:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ok

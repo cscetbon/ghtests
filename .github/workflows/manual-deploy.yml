@@ -1,0 +1,32 @@
+name: Xpert Pipelines Deployment To STG|UAT
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        options:
+        - stg
+        - uat
+        - prod
+
+jobs:
+
+  check-deploy-is-allowed:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Fail if deploying to prod without a tag
+      if: ${{ github.event.inputs.environment == 'prod' && github.ref_type != 'tag' }}
+      run: |
+        echo Cannot deploy to 'prod' without a tagged version
+        exit 1
+
+  deploy:
+    needs: check-deploy-is-allowed
+    uses: ./.github/workflows/build-and-deploy.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+    secrets: inherit

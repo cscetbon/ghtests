@@ -9,4 +9,4 @@ jobs:
   job-on-release-published:
     runs-on: ubuntu-latest
     steps:
-    - run: echo ok
+    - run: echo ${{ toJson(github) }}

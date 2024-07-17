@@ -1,4 +1,4 @@
-name: Xpert Pipelines Deployment To STG|UAT
+name: Xpert Pipelines Manual Deployment
 
 on:
   workflow_dispatch:
@@ -15,9 +15,6 @@ jobs:
   check-deploy-is-allowed:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v4
-
     - name: Fail if deploying to prod without a tag
       if: ${{ github.event.inputs.environment == 'prod' && github.ref_type != 'tag' }}
       run: |
